@@ -4,7 +4,7 @@ title: "Quarto Web Demo"
 
 This is the main landing page!
 
-* To learn more about [geezers](https://www.thegeezer.com/).
+* To learn more about [frogs](https://en.wikipedia.org/wiki/Frog).
 
 * To learn more about [Quarto websites](https://quarto.org/docs/websites).
 
