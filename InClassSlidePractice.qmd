@@ -1,0 +1,5 @@
+---
+title: "In Class Slide Practice"
+format: revealjs
+editor: visual
+---

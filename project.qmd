@@ -1,5 +1,5 @@
 ---
-title: "Projects"
+title: "R for Data Science Projects"
 ---
 
 * [Project 1]()

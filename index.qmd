@@ -1,11 +1,5 @@
 ---
-title: "Quarto Web Demo"
+title: "Welcome"
 ---
 
-This is the main landing page!
-
-* To learn more about [frogs](https://en.wikipedia.org/wiki/Frog).
-
-* To learn more about [Quarto websites](https://quarto.org/docs/websites).
-
-
+I am an environmental science major with a concentration in life sciences at Appalachian State University, class of 2026.
