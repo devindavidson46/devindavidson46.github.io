@@ -2,22 +2,22 @@
   {
     "objectID": "project.html",
     "href": "project.html",
-    "title": "Projects",
+    "title": "R for Data Science Projects",
     "section": "",
-    "text": "Project 1\nProject 2\nProject 3\nProject 4"
+    "text": "R4DS Ch. 1\nProject 2\nProject 3\nProject 4"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About Me",
     "section": "",
-    "text": "This is where you get to write about yourself.\nIf your favorite color is purple you might show a graph that uses purple."
+    "text": "I am currently in my third year at Appalachian State University in Boone, NC. My major is environmental science with a concentration in life sciences. I am from Raleigh, NC but moved to Boone to find new adventure in a new landscape. I swim, play soccer, DJ, and love getting outside!"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Quarto Web Demo",
+    "title": "Welcome",
     "section": "",
-    "text": "This is the main landing page!\n\nTo learn more about frogs.\nTo learn more about Quarto websites."
+    "text": "I am an environmental science major with a concentration in life sciences at Appalachian State University, class of 2026."
   }
 ]

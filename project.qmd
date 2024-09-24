@@ -2,7 +2,7 @@
 title: "R for Data Science Projects"
 ---
 
-* [Project 1]()
+* [R4DS Ch. 1](https://stt2860-f2024.github.io/r4ds-exercises-devindavidson46/)
 * [Project 2]()
 * [Project 3]()
 * [Project 4]()
