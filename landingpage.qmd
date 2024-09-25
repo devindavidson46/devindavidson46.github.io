@@ -4,4 +4,4 @@ title: "Welcome"
 
 I am an environmental science major with a concentration in life sciences at Appalachian State University, class of 2026.
 
-![caption](IMG_5877.HEIC)
+![](IMG_5877.jpg)
