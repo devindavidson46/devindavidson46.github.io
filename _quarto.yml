@@ -6,10 +6,10 @@ website:
   title: Devin Davidson
   navbar:
     left:
-      - href: index.qmd
+      - href: landingpage.qmd
         text: Home
-      - about.qmd
-      - project.qmd
+      - aboutme.qmd
+      - projects.qmd
     
     tools:
       - icon: trash
