@@ -12,18 +12,12 @@ website:
       - projects.qmd
     
     tools:
-      - icon: trash
-        href: https://www.mountainproject.com/area/112001458/the-dump
-      - icon: twitter
-        href: https://x.com
       - icon: linkedin
         href: https://www.linkedin.com/
       - icon: github
         menu:
           - text: Source Code
-            href: https://github.com
-          - text: Report a Bug
-            href: https://github.com  
+            href: https://github.com/devindavidson46/devindavidson46.github.io
 
 format:
   html:
