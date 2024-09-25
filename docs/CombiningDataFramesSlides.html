@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Devin Davidson - R for Data Science Projects</title>
+<title>Devin Davidson - Combining Data Frames Slides</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -90,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./project.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./project.html" rel="" target="">
  <span class="menu-text">R for Data Science Projects</span></a>
   </li>  
 </ul>
@@ -123,14 +157,23 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">Set Up</a></li>
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="CombiningDataFramesSlides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R for Data Science Projects</h1>
+<h1 class="title">Combining Data Frames Slides</h1>
 </div>
 
 
@@ -145,12 +188,127 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<ul>
-<li><a href="https://stt2860-f2024.github.io/r4ds-exercises-devindavidson46/">R4DS Excersice Book</a></li>
-<li><a href="./CombiningDataFramesSlides.html">Combinind Data Frames Slides</a></li>
-</ul>
+<section id="set-up" class="level1">
+<h1>Set Up</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybiology)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(happy)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(happy_join_one)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(happy_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="question-1" class="level1">
+<h1>Question 1</h1>
+<p>Take a look at the three data frames:</p>
+<ol type="1">
+<li><code>happy</code></li>
+<li><code>happy_join_one</code></li>
+<li><code>happy_full</code></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(happy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  country_name ladder_score   gdp social_support
+  &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
+1 Iraq                 4.85  9.24          0.746
+2 Comoros              4.29  8.03          0.626
+3 Panama               6.18 10.4           0.896
+4 Maldives             5.20  9.83          0.913
+5 Spain                6.49 10.6           0.932</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(happy_join_one)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  country_name healthy_life_expectancy
+  &lt;chr&gt;                          &lt;dbl&gt;
+1 Iraq                            60.6
+2 Comoros                         57.3
+3 Panama                          69.7
+4 Maldives                        70.6
+5 Spain                           74.7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(happy_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 20
+  country_name region         ladder_score standard_error_of_ladd…¹ upperwhisker
+  &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;                    &lt;dbl&gt;        &lt;dbl&gt;
+1 Finland      Western Europe         7.84                    0.032         7.90
+2 Denmark      Western Europe         7.62                    0.035         7.69
+3 Switzerland  Western Europe         7.57                    0.036         7.64
+4 Iceland      Western Europe         7.55                    0.059         7.67
+5 Netherlands  Western Europe         7.46                    0.027         7.52
+6 Norway       Western Europe         7.39                    0.035         7.46
+# ℹ abbreviated name: ¹​standard_error_of_ladder_score
+# ℹ 15 more variables: lowerwhisker &lt;dbl&gt;, logged_gdp_per_capita &lt;dbl&gt;,
+#   social_support &lt;dbl&gt;, healthy_life_expectancy &lt;dbl&gt;,
+#   freedom_to_make_life_choices &lt;dbl&gt;, generosity &lt;dbl&gt;,
+#   perceptions_of_corruption &lt;dbl&gt;, ladder_score_in_dystopia &lt;dbl&gt;,
+#   explained_by_log_gdp_per_capita &lt;dbl&gt;, explained_by_social_support &lt;dbl&gt;,
+#   explained_by_healthy_life_expectancy &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="question-2" class="level1">
+<h1>Question 2</h1>
+<p>Combine <code>happy</code> and <code>happy_join_one</code> by row.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(happy, happy_join_one)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   country_name ladder_score   gdp social_support healthy_life_expectancy
+   &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;                   &lt;dbl&gt;
+ 1 Iraq                 4.85  9.24          0.746                    NA  
+ 2 Comoros              4.29  8.03          0.626                    NA  
+ 3 Panama               6.18 10.4           0.896                    NA  
+ 4 Maldives             5.20  9.83          0.913                    NA  
+ 5 Spain                6.49 10.6           0.932                    NA  
+ 6 Iraq                NA    NA            NA                        60.6
+ 7 Comoros             NA    NA            NA                        57.3
+ 8 Panama              NA    NA            NA                        69.7
+ 9 Maldives            NA    NA            NA                        70.6
+10 Spain               NA    NA            NA                        74.7</code></pre>
+</div>
+</div>
+</section>
+<section id="question-3" class="level1">
+<h1>Question 3</h1>
+<p>Combine <code>happy</code> and <code>happy_join_one</code> by column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(happy, happy_join_one)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `country_name` -&gt; `country_name...1`
+• `country_name` -&gt; `country_name...5`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  country_name...1 ladder_score   gdp social_support country_name...5
+  &lt;chr&gt;                   &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;           
+1 Iraq                     4.85  9.24          0.746 Iraq            
+2 Comoros                  4.29  8.03          0.626 Comoros         
+3 Panama                   6.18 10.4           0.896 Panama          
+4 Maldives                 5.20  9.83          0.913 Maldives        
+5 Spain                    6.49 10.6           0.932 Spain           
+# ℹ 1 more variable: healthy_life_expectancy &lt;dbl&gt;</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
