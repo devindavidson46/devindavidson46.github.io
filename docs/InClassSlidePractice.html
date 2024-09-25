@@ -10,7 +10,7 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.433">
 
-  <title>Devin Davidson - In Class Slide Practice</title>
+  <title>Devin Davidson - Combining Data Frames Slides</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -324,14 +324,105 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">In Class Slide Practice</h1>
+  <h1 class="title">Combining Data Frames Slides</h1>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
-<section class="slide level2">
+<section id="set-up" class="title-slide slide level1 center">
+<h1>Set Up</h1>
 
+</section>
+
+<section id="question-1" class="title-slide slide level1 center">
+<h1>Question 1</h1>
+<p>Take a look at the three data frames:</p>
+<ol type="1">
+<li><code>happy</code></li>
+<li><code>happy_join_one</code></li>
+<li><code>happy_full</code></li>
+</ol>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  country_name ladder_score   gdp social_support
+  &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
+1 Iraq                 4.85  9.24          0.746
+2 Comoros              4.29  8.03          0.626
+3 Panama               6.18 10.4           0.896
+4 Maldives             5.20  9.83          0.913
+5 Spain                6.49 10.6           0.932</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  country_name healthy_life_expectancy
+  &lt;chr&gt;                          &lt;dbl&gt;
+1 Iraq                            60.6
+2 Comoros                         57.3
+3 Panama                          69.7
+4 Maldives                        70.6
+5 Spain                           74.7</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 20
+  country_name region         ladder_score standard_error_of_ladd…¹ upperwhisker
+  &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;                    &lt;dbl&gt;        &lt;dbl&gt;
+1 Finland      Western Europe         7.84                    0.032         7.90
+2 Denmark      Western Europe         7.62                    0.035         7.69
+3 Switzerland  Western Europe         7.57                    0.036         7.64
+4 Iceland      Western Europe         7.55                    0.059         7.67
+5 Netherlands  Western Europe         7.46                    0.027         7.52
+6 Norway       Western Europe         7.39                    0.035         7.46
+# ℹ abbreviated name: ¹​standard_error_of_ladder_score
+# ℹ 15 more variables: lowerwhisker &lt;dbl&gt;, logged_gdp_per_capita &lt;dbl&gt;,
+#   social_support &lt;dbl&gt;, healthy_life_expectancy &lt;dbl&gt;,
+#   freedom_to_make_life_choices &lt;dbl&gt;, generosity &lt;dbl&gt;,
+#   perceptions_of_corruption &lt;dbl&gt;, ladder_score_in_dystopia &lt;dbl&gt;,
+#   explained_by_log_gdp_per_capita &lt;dbl&gt;, explained_by_social_support &lt;dbl&gt;,
+#   explained_by_healthy_life_expectancy &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+
+<section id="question-2" class="title-slide slide level1 center">
+<h1>Question 2</h1>
+<p>Combine <code>happy</code> and <code>happy_join_one</code> by row.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   country_name ladder_score   gdp social_support healthy_life_expectancy
+   &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;                   &lt;dbl&gt;
+ 1 Iraq                 4.85  9.24          0.746                    NA  
+ 2 Comoros              4.29  8.03          0.626                    NA  
+ 3 Panama               6.18 10.4           0.896                    NA  
+ 4 Maldives             5.20  9.83          0.913                    NA  
+ 5 Spain                6.49 10.6           0.932                    NA  
+ 6 Iraq                NA    NA            NA                        60.6
+ 7 Comoros             NA    NA            NA                        57.3
+ 8 Panama              NA    NA            NA                        69.7
+ 9 Maldives            NA    NA            NA                        70.6
+10 Spain               NA    NA            NA                        74.7</code></pre>
+</div>
+</div>
+</section>
+
+<section id="question-3" class="title-slide slide level1 center">
+<h1>Question 3</h1>
+<p>Combine <code>happy</code> and <code>happy_join_one</code> by column.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  country_name...1 ladder_score   gdp social_support country_name...5
+  &lt;chr&gt;                   &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;           
+1 Iraq                     4.85  9.24          0.746 Iraq            
+2 Comoros                  4.29  8.03          0.626 Comoros         
+3 Panama                   6.18 10.4           0.896 Panama          
+4 Maldives                 5.20  9.83          0.913 Maldives        
+5 Spain                    6.49 10.6           0.932 Spain           
+# ℹ 1 more variable: healthy_life_expectancy &lt;dbl&gt;</code></pre>
+</div>
+</div>
 
 <div class="footer footer-default">
 
@@ -548,6 +639,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

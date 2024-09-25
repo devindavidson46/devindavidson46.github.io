@@ -1,0 +1,45 @@
+---
+title: "Combining Data Frames Slides"
+format: revealjs
+editor: visual
+---
+
+# Set Up
+
+```{r}
+library(tidyverse)
+library(tidybiology)
+data(happy)
+data(happy_join_one)
+data(happy_full)
+```
+
+# Question 1
+
+Take a look at the three data frames:
+
+1.  `happy`
+2.  `happy_join_one`
+3.  `happy_full`
+
+```{r}
+head(happy)
+head(happy_join_one)
+head(happy_full)
+```
+
+# Question 2
+
+Combine `happy` and `happy_join_one` by row.
+
+```{r}
+bind_rows(happy, happy_join_one)
+```
+
+# Question 3
+
+Combine `happy` and `happy_join_one` by column.
+
+```{r}
+bind_cols(happy, happy_join_one)
+```
