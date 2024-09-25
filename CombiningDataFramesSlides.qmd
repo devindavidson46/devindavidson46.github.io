@@ -1,12 +1,12 @@
 ---
-title: "Combining Data Frames Slides"
+title: "Practice Combining Data Frames"
+author: "Devin Davidson"
 format: revealjs
 editor: visual
 ---
-
 # Set Up
-
 ```{r}
+#| echo: true
 library(tidyverse)
 library(tidybiology)
 data(happy)
@@ -15,31 +15,37 @@ data(happy_full)
 ```
 
 # Question 1
-
 Take a look at the three data frames:
+`happy`, `happy_join_one` & `happy_full`
 
-1.  `happy`
-2.  `happy_join_one`
-3.  `happy_full`
-
+# 1: View `happy`
 ```{r}
-head(happy)
-head(happy_join_one)
-head(happy_full)
+#| echo: true
+glimpse(happy)
+```
+
+# 2: View `happy_join_one`
+```{r}
+#| echo: true
+glimpse(happy_join_one)
+```
+
+# 3: View `happy_full`
+```{r}
+#| echo: true
+glimpse(happy_full)
 ```
 
 # Question 2
-
 Combine `happy` and `happy_join_one` by row.
-
 ```{r}
+#| echo: true
 bind_rows(happy, happy_join_one)
 ```
 
 # Question 3
-
 Combine `happy` and `happy_join_one` by column.
-
 ```{r}
+#| echo: true
 bind_cols(happy, happy_join_one)
 ```
