@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "projects.html",
-    "href": "projects.html",
-    "title": "R for Data Science Projects",
+    "objectID": "landingpage.html",
+    "href": "landingpage.html",
+    "title": "Welcome",
     "section": "",
-    "text": "R4DS Excersice Book\nCombinind Data Frames Slides"
+    "text": "I am an environmental science major with a concentration in life sciences at Appalachian State University, class of 2026."
   },
   {
     "objectID": "aboutme.html",
@@ -14,10 +14,10 @@
     "text": "I am currently in my third year at Appalachian State University in Boone, NC. My major is environmental science with a concentration in life sciences. I am from Raleigh, NC but moved to Boone to find new adventure in a new landscape. I swim, play soccer, DJ, and love getting outside!"
   },
   {
-    "objectID": "landingpage.html",
-    "href": "landingpage.html",
-    "title": "Welcome",
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "R for Data Science Projects",
     "section": "",
-    "text": "I am an environmental science major with a concentration in life sciences at Appalachian State University, class of 2026."
+    "text": "R4DS Excersice Book\nCombinind Data Frames Slides"
   }
 ]

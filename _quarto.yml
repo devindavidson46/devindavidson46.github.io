@@ -17,7 +17,7 @@ website:
       - icon: github
         menu:
           - text: Source Code
-            href: https://github.com/devindavidson46/devindavidson46.github.io
+            href: https://github.com/devindavidson46/
 
 format:
   html:
