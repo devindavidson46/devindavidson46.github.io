@@ -1,0 +1,365 @@
+---
+title: "STT 2860 Final Project: Hockey"
+date: last-modified
+date-format: "[Last modified on] MMMM DD, YYYY HH:mm:ss zzz"
+format: 
+  html:
+    theme: cosmo  # zephyr pulse, sketchy, default, cosmo, vapor etc
+author:
+  - name: Devin Davidson
+    email: davidsonds2@appstate.edu
+    affiliation:
+      - name: Appalachian State University
+        city: Boone
+        state: NC  
+        url: https://www.appstate.edu/
+abstract: >
+  In this project we will aim to find indicators of playoff success from regular season and playoff statistics in the NHL. 
+keywords:
+  - R
+  - data viz
+code-fold: false
+---
+
+```{r}
+#| label: "setup"
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, comment = NA, fig.align = "center")
+```
+
+## Loading Necessary Packages
+
+In this project we will use the `dplyr` package to munge data. The `ggplot2` package will be used to plot and visualize the data.
+
+```{r}
+#| label: "loading packages"
+library(dplyr)
+library(ggplot2)
+```
+
+## Importing Data
+
+The information used herein was obtained free of charge from and is copyrighted by the [Hockey Databank Project](http://sports.groups.yahoo.com/group/hockey-databank). For more information about the Hockey Databank Project please visit: 
+http://sports.groups.yahoo.com/group/hockey-databank
+
+All of the data was downloaded from [Kaggle](https://www.kaggle.com/datasets/open-source-sports/professional-hockey-database). This project contains 2 data sets and each file was imported and read with the `read.csv()` function.
+
+```{r}
+regseason <- read.csv(file = "./data/Teams.csv",
+                    header = TRUE,
+                    stringsAsFactors = FALSE)
+
+postseason <- read.csv(file = "./data/TeamsPost.csv",
+                 header = TRUE,
+                 stringsAsFactors = FALSE)
+```
+
+## Examining and Munging Data
+
+First let's examine the structure of these two data frames using the `str()` function to see what we are working with.
+
+```{r}
+str(regseason)
+str(postseason)
+```
+
+A lot of these variables are not named intuitively. We will fix that using the `mutate` verb so they make more sense. Additionally we will `select` for the variables we want to look at as some are going to be unnecessary for this project.
+
+```{r}
+rsupdate <- regseason |>
+  filter(year >= 2005) |>
+  mutate(Abrev = tmID,
+         rsG = G,
+         rsW = W,
+         rsL = L,
+         rsT = T,
+         rsOTL = OTL,
+         rsGF = GF,
+         rsGA = GA,
+         rsPIMpG = PIM / G,
+         rsPPpercent = (PPG / PPC) * 100,
+         rsPKpercent = 100 - ((PKG / PKC) * 100),
+         rsPPGF = PPG,
+         rsPPGF = PPG,
+         rsPPs = PPC,
+         rsSHGA = SHA,
+         rsSHGF = SHF) |>
+  select(year, franchID, name, tmID, 
+         Pts, rank, playoff, 
+         rsG, rsW, rsL, 
+         rsOTL, rsGF, rsGA, 
+         rsPPpercent, rsPKpercent, rsPPGF, 
+         rsPPs, rsSHGF, rsSHGA, 
+         rsPIMpG)
+
+psupdate <- postseason |>
+  filter(year >= 2005) |>
+  mutate(psG = G,
+         psW = W,
+         psL = L,
+         psGF = GF,
+         psGA = GA,
+         psPIM = PIM,
+         psPPpercent = (PPG / PPC) * 100,
+         psPKpercent = 100 - ((PKG / PKC) * 100),
+         psPPGF = PPG,
+         psPPs = PPC,
+         psPPGA = PKG,
+         psPPsA = PKC,
+         psSHGA = SHA,
+         psSHGF = SHF,
+         psPIMpG = PIM / psG) |>
+  select(year, tmID, psG, 
+         psW, psL, psGF, 
+         psGA, psPPpercent, psPKpercent, 
+         psPPGF, psPPs, psSHGF, psSHGA, psPIMpG)
+```
+
+Now, we will combine the two data frames into one and call it `NHL`. Then we will look at the structure, using `str()`, of the new data frame.  
+
+```{r}
+NHL <- full_join(
+  rsupdate, 
+  psupdate,
+  by = join_by(year == year, tmID == tmID)
+)
+str(NHL)
+```
+
+Lets look at, and define, the variables we have in the `NHL` data frame.
+
+`year`: The NHL season in which the observation is from. The year 2005 refers to the 2005-06 NHL season.
+
+`name`: The full name of the team.
+
+`tmID`: The abbreviated name of the team.
+
+`Pts`: Points accumulated by the team at the end of the regular season. A team gets 2 points for a win, 1 point for an overtime loss, and 0 points for a regulation loss.
+
+`rank`: The team's final ranking in the standings.
+
+`playoff`: How the team finished in the playoffs. CQF means they lost in the Conference Quarter Finals (round 1). CSF means they lost in the Conference Semi Finals (round 2). CF means they lost in the Conference Finals (round 3). F means they lost in the finals (round 4). SC means they won the Stanley Cup!
+
+`rsG`: The amount of games played in the regular season.
+
+`rsW:` The amount of wins in the regular season.
+
+`rsL`: The amount of losses in the regular season.
+
+`rsOTL`: The amount of overtime losses in the regular season.
+
+`rsGF`: The amount of goals scored by the team in the regular season.
+
+`rsGA`: The amount of goals given up by the team in the regular season.
+
+`rsPPpercent`: The percentage of power plays that the team scored during in the regular season.
+
+`rsPKpercent`: The percentage of penalty kills a team was successful in not giving up a goal in the regular season.
+
+`rsPPGF`: The amount of power play goals scored in the regular season.
+
+`rsPPs`: The amount of power plays a team had in the regular season.
+
+`rsSHGF`: The amount of goals scored by a team while they are on the penalty kill in the regular season.
+
+`rsSHGA`: The amount of penalty kill goals scored by opposing teams in the regular season.
+
+`rsPIMpG`: The average amount of penalty minutes a team had each game in the regular season.
+
+`psG`: The amount of games played in the playoffs.
+
+`psW`: The amount of wins in the playoffs.
+
+`psL`: The amount of losses in the playoffs.
+
+`psGF`: The amount of goals scored by the team in the playoffs.
+
+`psGA`: The amount of goals given up by the team in the playoffs.
+
+`psPPpercent`: The percentage of power plays that the team scored during in the regular season.
+
+`psPKpercent`: The percentage of penalty kills a team was successful in not giving up a goal in the playoffs.
+
+`psPPGF`: The amount of power play goals scored in the playoffs.
+
+`psPPs`: The amount of power plays a team had in the regular season.
+
+`psSHGF`: The amount of goals scored by a team while they are on the penalty kill in the playoffs.
+
+`psSHGA`: The amount of penalty kill goals scored by opposing teams in the playoffs.
+
+`psPIMpG`: The average amount of penalty minutes a team had each game in the playoffs.
+
+## Plotting Trends and Visualizing Data
+
+The main thing that we will be looking at in this project is to try and find regular season stats that can be indicators of playoff success. First, we will look at how the points (`Pts`) each team earned can indicate playoff success (`playoff`).
+
+The data points in a lot of these graphs will be jittered using `position = position_jitter()` allowing us to see overlapping data points. This means that the left-right shift of data within each year column does not mean anything.
+
+```{r}
+#| label: "fig-rsPts"
+#| fig-cap: "Scatterplot showing the amount of points that teams earned by year and colored by their playoff success"
+ggplot(data = NHL, aes(x = year, y = Pts, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.15)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Points")
+```
+
+It's interesting that in only 1 these years the top team in points won the Stanley Cup. Additionally it was the fourth worst team to make the playoffs in 2011 to win the Stanley Cup. Next, we will look at goals for (`rsGF`) and goals against (`rsGA`).
+
+```{r}
+#| label: "fig-rsGA"
+#| fig-cap: "Scatterplot showing the amount of goals against each team had by year and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = rsGA, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.15)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Regular Season Goals Against")
+```
+
+```{r}
+#| label: "fig-rsGF"
+#| fig-cap: "Scatterplot showing the amount of goals for each team had by year and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = rsGF, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Regular Season Goals For")
+```
+
+```{r}
+#| label: "fig-rsGFGA"
+#| fig-cap: "Scatterplot showing the amount of goals for and goals against teams had and colored by their playoff success."
+ggplot(data = NHL, aes(x = rsGF, y = rsGA, color = playoff)) +
+  geom_point() +
+  theme_bw() +
+  labs(x = "Regular Season Goals For",
+       y = "Regular Season Goals Against")
+```
+
+It looks like regular season goals for and goals against are not perfect indicators of playoff success individually. When both goals for and goals against are plotted together, it can be seen that being a team can be successful if they are either good at both goals for and goals against or elite at one and poor at the other. Next we will look at penalty minutes (`rsPIMpG`) to see if being more disciplined in the regular season can indicate a successful playoff team.
+
+```{r}
+#| label: "fig-rsPIM"
+#| fig-cap: "Scatterplot showing the amount of penalty minutes per game teams had by year and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = rsPIMpG, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Regular Season Penalty Minuter per Game")
+```
+
+It looks like regular season penalty minutes is not a good indicator either of playoff success. In fact, in 2006 the Stanley Cup winner had the most regular season penalty minutes in the entire NHL. Next, let's look at special teams: the penalty kill (`rsPKpercent`) and power play (`rsPPpercent`).
+
+```{r}
+#| label: "fig-rsPP"
+#| fig-cap: "Scatterplot showing the power play success percentage of teams by year and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = rsPPpercent, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Regular Season Power Play Percentage")
+```
+
+```{r}
+#| label: "fig-rsPK"
+#| fig-cap: "Scatterplot showing the penalty kill success percentage of teams by year and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = rsPKpercent, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Regular Season Penalty Kill Percentage")
+```
+
+```{r}
+#| label: "fig-rsPKPP"
+#| fig-cap: "Scatterplot showing the penalty kill and power play success percentages of teams and colored by their playoff success."
+ggplot(data = NHL, aes(x = rsPKpercent, y = rsPPpercent, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Regular Season Penalty Kill Percentage",
+       y = "Regular Season Power Play Percentage")
+```
+
+It seems that having a balanced special teams is important to having playoff success. Most teams to be only good at one aspect tend to struggle in the playoffs. It looks like having a great penalty kill is slightly more important than having a good power play.
+
+Let's add another variable to the data frame called `WPts` which will indicate the amount of points that come from wins, as opposed to the one point a team gets for an overtime loss.
+
+```{r}
+NHL <- NHL |>
+  mutate(WPts = Pts - rsW)
+```
+
+```{r}
+#| label: "fig-rsWPts"
+#| fig-cap: "Scatterplot comparing the points earned to the points earned only from wins of teams and colored by their playoff success."
+ggplot(data = NHL, aes(x = Pts, y = WPts, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Points",
+       y = "Points from Wins")
+```
+
+Since in the playoffs the only thing that matters in winning, I expected to see a trend that successful teams in the playoffs would be on the top of this line however only 2 of the Stanley Cup winners are. 
+
+It appears that there are not any good indicators of playoff success that come from the regular season. Instead, let's look at playoff stats and see what areas the Stanley Cup winners excel at.
+
+```{r}
+#| label: "fig-psGFGA"
+#| fig-cap: "Scatterplot showing the goals for and goals against of each team in the playoffs and colored by their playoff success."
+ggplot(data = NHL, aes(x = psGF, y = psGA, color = playoff)) +
+  geom_point() +
+  theme_bw() +
+  labs(x = "Playoff Goals For",
+       y = "Playoff Goals Against")
+```
+
+
+From this plot it appears that successful playoff teams need to be good at both scoring and defending however, it looks like limiting goals against is more important than scoring goals. It looks like the teams that give up a lot of goals tend to get eliminated in the conference finals. Let's look at discipline in the playoffs next.
+
+```{r}
+#| label: "fig-psPIM"
+#| fig-cap: "Scatterplot showing the amount of penalty minutes per game of teams in the playoffs by year and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = psPIMpG, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Playoff Penalty Minutes per Game")
+```
+
+More often than not, playoff discipline is important however in none of the studied years was did the Stanley Cup winner have the fewest PIM per game. This could indicate that being disciplined is good however some edge, grit, and hard work that can lead to some penalty minutes is also important. Finally we will look at playoff special teams.
+
+```{r}
+#| label: "fig-psPP"
+#| fig-cap: "Scatterplot showing the power play success percentage of teams by year in the playoffs and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = psPPpercent, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Playoff Power Play Percentage")
+```
+
+```{r}
+#| label: "fig-psPK"
+#| fig-cap: "Scatterplot showing the penalty kill success percentage of teams by year in the playoffs and colored by their playoff success."
+ggplot(data = NHL, aes(x = year, y = psPKpercent, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Year",
+       y = "Playoff Penalty Kill Percentage")
+```
+
+```{r}
+#| label: "fig-psPKPP"
+#| fig-cap: "Scatterplot showing the penalty kill and power play success percentage of teams in the playoffs and colored by their playoff success."
+ggplot(data = NHL, aes(x = psPPpercent, y = psPKpercent, color = playoff)) +
+  geom_point(position = position_jitter(h=0, w=0.25)) +
+  theme_bw() +
+  labs(x = "Playoff Power Play Percentage",
+       y = "Playoff Penalty Kill Percentage")
+```
+
+It looks like having a good penalty kill is more important than having a good powerplay although neither are great indicators of playoff success.
+
+It looks like there aren't any specific stats that indicate playoff success. I suppose all the matters is winning 16 games and that can be done in a variety of ways. This isn't the most exciting result to find but it is good to know.
