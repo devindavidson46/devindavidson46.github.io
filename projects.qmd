@@ -5,3 +5,4 @@ title: "R for Data Science Projects"
 * [R4DS Excersice Book](https://stt2860-f2024.github.io/r4ds-exercises-devindavidson46/)
 * [Combinind Data Frames Slides](./SLIDES/CombiningDataFramesSlides.qmd)
 * [Bicycle Sharing Project](https://stt2860-f2024.github.io/bicycle-sharing-devindavidson46/BikeSharing.html)
+* [Final Project - NHL](Home/git_repositories/FinalProject/hockeyproject.qmd) 
